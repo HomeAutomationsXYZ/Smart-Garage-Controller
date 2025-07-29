@@ -9,13 +9,21 @@ Whatch this space for updates on the new Smart Garage Controller.
 * Support for Centurion SD04 Smart Motor
 * Open / Close Garage Doors
 * Get status of Garage Doors
-* Configurable LED
+* 2x Configurable LEDs (Top and Bottom)
 * Temperature and Humidity Measurement
 * Ambient Light Measurement
 * Optional Vehicle Detection (1 or 2 Vehicles)
 * Optional Presence Detection
 * Optional Movement Detection
+  - Supported mmWave sensors:
+    - LD-2402
+    - LD-2420
+    - LD-2410C
+    - LD-2410B
 * Additional GPIO's exposed
+* Bluetooth on ESP32
+  - Used for Bluetooth Proxy
+  - Other Bluetooth Features
 
 ## Home Assistant Basic view
 
