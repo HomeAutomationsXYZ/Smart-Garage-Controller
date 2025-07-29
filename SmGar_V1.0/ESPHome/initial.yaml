@@ -1,0 +1,107 @@
+# Initial Template Firmware that ships with the device.
+# Binary can be found in the /Firmware folder
+
+esphome:
+  name: smart-garage
+  friendly_name: Smart Garage
+
+esp32:
+  board: esp32dev
+  flash_size: 8MB
+  framework:
+    type: esp-idf
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  # encryption:
+  #   key: ""
+
+ota:
+  - platform: esphome
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Smart-Garage Fallback Hotspot"
+    password: "password"
+
+captive_portal:
+
+output:
+  - platform: gpio
+    pin: GPIO14
+    id: led1_output
+  - platform: gpio
+    pin: GPIO32
+    id: led2_output
+
+
+globals:
+  - id: led_state
+    type: bool
+    restore_value: no
+    initial_value: 'false'
+
+interval:
+  - interval: 1s
+    then:
+      - if:
+          condition:
+            lambda: 'return id(led_state);'
+          then:
+            - output.turn_off: led1_output
+            - output.turn_on: led2_output
+            - lambda: 'id(led_state) = false;'
+          else:
+            - output.turn_on: led1_output
+            - output.turn_off: led2_output
+            - lambda: 'id(led_state) = true;'
+    
+# =========== Door Trigger ==============
+switch:
+  - platform: gpio
+    pin: GPIO12
+    id: relay
+    restore_mode: ALWAYS_OFF
+
+  - platform: template
+    name: "Garage Door"
+    icon: "mdi:garage"
+    turn_on_action:
+      - switch.turn_on: relay
+      - delay: 500ms
+      - switch.turn_off: relay
+
+# =========== Door Trigger ==============
+
+# I2C Bus Interface
+i2c:
+  sda: GPIO21
+  scl: GPIO22
+  scan: true
+  id: bus_a
+
+sensor:
+# =========== Temp and Ambient Light ==============
+  - platform: shtcx
+    temperature:
+      name: "Garage Temperature"
+    humidity:
+      name: "Garage Humidity"
+    address: 0x70
+    update_interval: 10s
+
+  - platform: veml7700
+    address: 0x10
+    update_interval: 10s
+    ambient_light: "Garage Ambient Light"
+    actual_gain: 
+      name: "Actual gain"
+
+# =========== Temp and Ambient Light ==============

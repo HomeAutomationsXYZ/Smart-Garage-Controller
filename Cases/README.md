@@ -12,3 +12,5 @@ Case 1 supports the following:
 * Exposed Temperature and Humidity Sensor
 * Exposed Ambient Light Sensor
 * Space for the mmWave Sensor inside case
+* Supports 2x HC-SR04 Ultrasonic Distance Sensors
+* 2x JST plug for Reed Switches (for Garage Status)
