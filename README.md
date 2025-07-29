@@ -1,6 +1,8 @@
 # Smart-Garage-Controller
 Whatch this space for updates on the new Smart Garage Controller.
 
+![Image of SmGar Controller Top](https://github.com/HomeAutomationsXYZ/Smart-Garage-Controller/tree/main/SmGar_V1.0/SGC_V1_0_Top.JPG)
+
 ## Features
 * Support for Centurion SD04 Smart Motor
 * Open / Close Garage Doors
