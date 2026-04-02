@@ -92,6 +92,18 @@ interval:
           else:
             - output.turn_on: led1_output
             - lambda: 'id(led_state) = true;'
+  - interval: 5s
+    then:
+      - if:
+          condition:
+            not:
+              - wifi.connected:   
+          then:
+            - output.turn_on: led2_output
+            - delay: 500ms
+            - output.turn_off: led2_output
+          else:
+            - output.turn_off: led2_output
 
 
 # ======================================================================
@@ -286,16 +298,4 @@ button:
     name: "Reset Device (WiFi Setup Mode)"
     entity_category: config
 
-interval:
-  - interval: 5s
-    then:
-      - if:
-          condition:
-            not:
-              - wifi.connected:   
-          then:
-            - output.turn_on: led2_output
-            - delay: 500ms
-            - output.turn_off: led2_output
-          else:
-            - output.turn_off: led2_output
+
